@@ -1,0 +1,19 @@
+# Maintainer: OneOff
+
+pkgname=usbgaget
+pkgver=1.2
+pkgrel=1
+pkgdesc="Usb Gaget Network"
+url="https://github.com/CsnakeC/usbgaget"
+arch=('x86_64' 'i686' 'armv7h' 'aarch64')
+license=('MIT')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/CsnakeC/usbgaget/archive//v$pkgver.tar.gz")
+sha512sums=('309d179e232e6e57faca90b93446c0a6fae6cffd798f20e1df0e29f26ef70198191e8087a0d5afa77809e54328ef5dacf3e552038d854b5163e03d3bbca01dae')
+
+package() {
+  cd "$pkgname-$pkgver"
+#  pkgdir="$pkgname-$pkgver"
+  install -Dm 755 usb-tethering.sh "${pkgdir}/usr/bin/usb-tethering"
+  install -d "${pkgdir}/usr/lib/systemd/system/"
+  install -m 644 usb-tethering.service "${pkgdir}/usr/lib/systemd/system/"
+}
