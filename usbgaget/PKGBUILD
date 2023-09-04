@@ -12,7 +12,6 @@ sha512sums=('309d179e232e6e57faca90b93446c0a6fae6cffd798f20e1df0e29f26ef70198191
 
 package() {
   cd "$pkgname-$pkgver"
-#  pkgdir="$pkgname-$pkgver"
   install -Dm 755 usb-tethering.sh "${pkgdir}/usr/bin/usb-tethering"
   install -d "${pkgdir}/usr/lib/systemd/system/"
   install -m 644 usb-tethering.service "${pkgdir}/usr/lib/systemd/system/"
