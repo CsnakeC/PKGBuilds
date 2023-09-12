@@ -1,0 +1,25 @@
+# Maintainer: One-off 
+
+pkgname=clickclack
+_commit="816b61add9808dc26e1af57a0953fd5172db072d"
+pkgver=0.2.3
+pkgrel=1
+pkgdesc='simple haptic feedback'
+url='https://git.sr.ht/~proycon/clickclack'
+arch=('x86_64' 'i686' 'armv7h' 'aarch64')
+license=('GPL3')
+#idepends=('wayland' 'pango')
+#makedepends=('fontconfig' 'libxkbcommon')
+source=("$pkgname-$_commit.tar.gz::https://git.sr.ht/~proycon/clickclack/archive/$_commit.tar.gz")
+
+
+sha512sums=('d3f1a9426adb653e2228bfdc1b9dac4538585942e3608e7fd45adc9e6140436a53397ac54dab361b615366f9d60738b56ae2247cd11c731471c6a7ad87859b00')
+
+build() {
+  make -C "$pkgname-$_commit"
+}
+
+package() {
+  make -C "$pkgname-$_commit" PREFIX=/usr DESTDIR="$pkgdir" install
+}
+
