@@ -1,0 +1,35 @@
+# Maintainer: Aren <rn+aur@peacevolution.org>
+
+pkgname=wvkbd
+_commit="34d6ce5566fd203898935951cc6d83747abfa098"
+pkgver=0.13
+pkgrel=1
+pkgdesc='On-screen keyboard for wlroots'
+url='https://git.sr.ht/~proycon/wvkbd'
+arch=('x86_64' 'i686' 'armv7h' 'aarch64')
+license=('GPL3')
+depends=('wayland' 'pango')
+makedepends=('fontconfig' 'libxkbcommon')
+source=("$pkgname-$_commit.tar.gz::https://git.sr.ht/~proycon/wvkbd/archive/$_commit.tar.gz"
+  '001-simple-custom.patch')
+
+sha512sums=('0128905fe4c6c5512ff27e544fa63a588e1fb3dab2dfd4b67cf352d95323d48f928a344653ff6b248249110345b79573ab7d175fe435511b9983cdac1549329a'
+            '92bc05c3977d2dff20573ad68bdcdedc889a25e6fb6f1fdd0ef07cd08a4a99118da633bd9087664eea186f793adf5946f0892bfa4af100a7b456f1f41294f498')
+
+prepare() {
+  cd "$pkgname-$_commit"
+
+  for patch in ../*.patch; do
+    echo "applying: $patch"
+    patch -p1 < "$patch"
+  done
+}
+
+build() {
+  make -C "$pkgname-$_commit"
+}
+
+package() {
+  make -C "$pkgname-$_commit" PREFIX=/usr DESTDIR="$pkgdir" install
+}
+
